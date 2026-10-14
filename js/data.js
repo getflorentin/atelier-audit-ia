@@ -8,7 +8,7 @@ DATA.links = {
   google: "https://www.google.com/search?q=Cabinet+dentaire+Guillaume+Becker+Monteux",
 };
 
-DATA.participants = ["Dr Becker", "Dr Dauphin", "Dr 3", "Manager", "Réf. communication"];
+DATA.participants = ["Participant 1", "Participant 2", "Participant 3", "Participant 4", "Participant 5"];
 
 DATA.steps = [
   { id: "home", n: "", t: "Accueil", time: "", ico: "◎" },
@@ -47,7 +47,7 @@ DATA.tips = {
   ],
   audit: [
     "Ouvrez le site, Instagram, Facebook et la fiche Google dans des onglets à côté (boutons en haut de page).",
-    "Ne notez pas seul : demandez « 0, 1, 2 ou 3 ? » à Charlotte puis aux dentistes.",
+    "Ne notez pas seul : demandez « 0, 1, 2 ou 3 ? » à la référente communication puis aux dentistes.",
     "Le radar à droite se dessine en direct : c'est le moment « effet waouh ».",
     "Chaque constat préparé est un bouton : cliquez pour l'insérer, puis ajustez avec ce qui est dit en séance.",
   ],
@@ -64,14 +64,14 @@ DATA.tips = {
   ],
   atelier: [
     "Commencez par les piliers de contenu (4 maximum), puis la fréquence tenable. Mieux vaut 2 posts par semaine tenus que 5 abandonnés.",
-    "Constructeur de prompt : remplissez-le avec Charlotte, copiez, ouvrez dans l'outil du cabinet, regardez le résultat ensemble.",
+    "Constructeur de prompt : remplissez-le avec la référente communication, copiez, ouvrez dans l'outil du cabinet, regardez le résultat ensemble.",
     "Scoreur de prompt : demandez à un dentiste d'écrire sa consigne habituelle, puis montrez la note.",
     "Studio visuel : créez un post aux couleurs du cabinet en 2 minutes, téléchargez-le.",
   ],
   demos: [
     "Séquence « valeur perçue » : automatisation animée, calculateur de temps gagné, outils à connaître.",
     "Dites clairement que l'automatisation est une prochaine étape, pas pour aujourd'hui.",
-    "Le calculateur de temps gagné doit être rempli avec les chiffres de Charlotte, pas les vôtres.",
+    "Le calculateur de temps gagné doit être rempli avec les chiffres de la référente communication, pas les vôtres.",
   ],
   questions: [
     "Les questions marquées d'une étoile sont prioritaires. Cochez celles posées, notez les réponses.",
@@ -142,11 +142,11 @@ DATA.audit = [
   { id: "a19", d: "Organisation", t: "Accès aux comptes sécurisés, plusieurs administrateurs, double authentification",
     hints: ["Agence quittée récemment : vérifier que ses accès sont retirés"] },
   { id: "a20", d: "Organisation", t: "Circuit de validation défini (qui valide, sous quel délai)",
-    hints: ["Charlotte rédige, un dentiste doit valider"] },
+    hints: ["La référente communication rédige, un dentiste doit valider"] },
   { id: "a21", d: "Organisation", t: "Temps dédié et banque de médias classée",
     hints: [] },
   { id: "a22", d: "IA", t: "Usage actuel : outil, compte, méthode de prompt, relecture",
-    hints: ["Le Dr Becker utilise déjà l'IA de façon empirique", "L'équipe est débutante"] },
+    hints: ["Un dentiste utilise déjà l'IA de façon empirique", "L'équipe est débutante"] },
   { id: "a23", d: "IA", t: "Règles de confidentialité connues et appliquées",
     hints: ["Vues lors de la session du 24 septembre"] },
 ];
@@ -334,53 +334,98 @@ DATA.tools = [
 ];
 
 /* ---------- Questions ---------- */
-DATA.questions = [
-  { th: "Objectifs et attentes", q: [
-    ["q1", "Qu'attendez-vous de la communication : nouveaux patients, fidélisation, recrutement, image ? Dans quel ordre ?", 1],
-    ["q2", "Qu'est-ce qui vous a poussés à arrêter l'agence ? Qu'est-ce qui marchait, qu'est-ce qui manquait ?", 1],
-    ["q3", "À quoi verrez-vous dans 3 mois que ça a marché ?", 1],
-    ["q4", "Quels types de patients voulez-vous attirer (implants, parodontologie, esthétique) ?", 0],
-    ["q5", "Y a-t-il des sujets que le cabinet refuse d'aborder ?", 0]] },
-  { th: "Organisation et temps", q: [
-    ["q6", "Combien d'heures par semaine Charlotte peut-elle y consacrer, sur son temps de travail ?", 1],
-    ["q7", "Qui valide un contenu avant publication, sous quel délai ? Que se passe-t-il si personne ne répond ?", 1],
-    ["q8", "Qui prend les photos et vidéos ? Y a-t-il un accord écrit des personnes qui apparaissent ?", 0],
-    ["q9", "Qui a les accès aux comptes ? Y a-t-il une double authentification ?", 0],
-    ["q10", "Que se passe-t-il quand Charlotte est absente ?", 0]] },
-  { th: "Outils existants", q: [
-    ["q11", "Quels outils utilisez-vous : Canva (gratuit ou payant), planificateur, Meta Business Suite ?", 1],
-    ["q12", "Qui gère le site, qui l'héberge, et l'agence a-t-elle encore la main dessus ?", 0],
-    ["q13", "Avez-vous une banque de photos et vidéos classée ? Où est-elle stockée ?", 0],
-    ["q14", "Avez-vous une charte graphique écrite (couleurs, polices, logo, tonalité) ?", 0]] },
-  { th: "Prise de rendez-vous et avis", q: [
-    ["q15", "Comment un nouveau patient prend-il rendez-vous aujourd'hui ? Combien d'appels manqués par semaine ?", 1],
-    ["q16", "Qui s'occupe des avis Google ? Quel est le sentiment sur les avis négatifs ?", 1],
-    ["q17", "Pourquoi ne pas être sur Doctolib (choix, coût, contrainte) ? Est-ce définitif ?", 0]] },
-  { th: "Déontologie et risques", q: [
-    ["q18", "Qui connaît les recommandations de l'Ordre sur la communication ? Les avez-vous relues récemment ?", 1],
-    ["q19", "Avez-vous déjà eu une remarque de l'Ordre, d'un patient ou d'un confrère sur une publication ?", 1],
-    ["q20", "Le consentement à l'image est-il tracé pour les patients et l'équipe ?", 0],
-    ["q21", "Les honoraires sont-ils affichés au cabinet et sur le site ?", 1]] },
-  { th: "Usage de l'IA", q: [
-    ["q22", "Qui utilise l'IA aujourd'hui, pour quoi, avec quel outil (gratuit ou payant) ?", 1],
-    ["q23", "Avez-vous déjà publié un contenu écrit avec l'IA ? Avec quelle relecture ?", 1],
-    ["q24", "Y a-t-il eu une mauvaise surprise (erreur, ton étrange, contenu inutilisable) ?", 0],
-    ["q25", "Avez-vous un compte équipe ou des comptes personnels ? Où partent les données ?", 1],
-    ["q26", "Qu'est-ce qui vous freine encore : peur de l'erreur, temps, confidentialité, manque de méthode ?", 0]] },
+DATA.questionsRaw = [
+  { step: "cadrage", th: "Objectifs et attentes", q: [
+    "*Qu'attendez-vous de la communication : nouveaux patients, fidélisation, recrutement, image ? Dans quel ordre ?",
+    "*Qu'est-ce qui vous a poussés à arrêter l'agence ? Qu'est-ce qui marchait, qu'est-ce qui manquait ?",
+    "*À quoi verrez-vous dans 3 mois que ça a marché ?",
+    "Quels types de patients voulez-vous attirer (implants, parodontologie, esthétique, familles) ?",
+    "Y a-t-il des sujets que le cabinet refuse d'aborder ?",
+    "Que voulez-vous que les patients disent du cabinet en sortant ?",
+    "Quelles contraintes de temps ou de budget fixons-nous d'emblée ?",
+    "Qui est le plus à l'aise avec les réseaux sociaux, qui l'est le moins ?"] },
+  { step: "audit", th: "Organisation et temps", q: [
+    "*Combien d'heures par semaine la référente communication peut-elle y consacrer, sur son temps de travail ?",
+    "*Qui valide un contenu avant publication, sous quel délai ? Que se passe-t-il si personne ne répond ?",
+    "*Qui a les accès aux comptes ? Y a-t-il une double authentification ? L'ancienne agence a-t-elle encore des accès ?",
+    "Qui prend les photos et vidéos ? Y a-t-il un accord écrit des personnes visibles ?",
+    "Que se passe-t-il quand la référente est absente ?",
+    "La dernière fois, combien de temps a-t-il fallu pour publier un post, du brief à la publication ?"] },
+  { step: "audit", th: "Outils et ressources existants", q: [
+    "*Quels outils utilisez-vous : Canva (gratuit ou payant), planificateur, Meta Business Suite ?",
+    "Qui gère le site, l'hébergement et le nom de domaine ? L'agence a-t-elle encore la main ?",
+    "Avez-vous une banque de photos et vidéos classée ? Où est-elle stockée ?",
+    "Avez-vous une charte graphique écrite (couleurs, polices, logo, tonalité) ?",
+    "Quelles statistiques regardez-vous aujourd'hui (abonnés, portée, appels) ?"] },
+  { step: "audit", th: "Site, prise de rendez-vous et fiche Google", q: [
+    "*Comment un nouveau patient prend-il rendez-vous aujourd'hui ? Combien d'appels manqués par semaine ?",
+    "*Les honoraires sont-ils affichés sur le site et au cabinet ?",
+    "Pourquoi ne pas être sur Doctolib (choix, coût, contrainte) ? Est-ce définitif ?",
+    "Savez-vous comment les nouveaux patients vous ont trouvés ?",
+    "Qui met à jour les horaires et la fiche Google en cas de fermeture ?",
+    "Quand le site a-t-il été mis à jour pour la dernière fois, et par qui ?"] },
+  { step: "deonto", th: "Déontologie et risques", q: [
+    "*Qui connaît les recommandations de l'Ordre sur la communication ? Les avez-vous relues récemment ?",
+    "*Avez-vous déjà eu une remarque de l'Ordre, d'un patient ou d'un confrère sur une publication ?",
+    "Le consentement à l'image est-il tracé pour les patients et l'équipe ?",
+    "Y a-t-il des publications passées que vous souhaitez retirer ?",
+    "Avez-vous déjà utilisé un avant/après, un témoignage ou une promotion ? Pourquoi ?"] },
+  { step: "deonto", th: "Avis en ligne", q: [
+    "*Qui s'occupe des avis Google et Facebook ? Quel est le sentiment sur les avis négatifs ?",
+    "Le cabinet a-t-il déjà répondu à un avis ? Que disait la réponse ?",
+    "Sollicitez-vous des avis (QR code, SMS, oral en fin de rendez-vous) ?",
+    "Avez-vous déjà eu un faux avis ou un avis litigieux ?",
+    "Qui prend la décision quand un avis pose problème ?"] },
+  { step: "ia", th: "Usage actuel de l'IA", q: [
+    "*Qui utilise l'IA aujourd'hui, pour quoi, avec quel outil (gratuit ou payant) ?",
+    "*Avez-vous déjà publié un contenu écrit avec l'IA ? Avec quelle relecture ?",
+    "*Avez-vous un compte équipe ou des comptes personnels ? Où partent les données ?",
+    "Y a-t-il eu une mauvaise surprise (erreur, ton étrange, contenu inutilisable) ?",
+    "Qu'est-ce qui vous freine encore : peur de l'erreur, temps, confidentialité, manque de méthode ?",
+    "Qu'avez-vous appliqué depuis la session du 24 septembre ?",
+    "Quelle tâche répétitive aimeriez-vous déléguer à l'IA en premier ?",
+    "Existe-t-il une règle écrite sur ce qui ne doit jamais être saisi dans un outil d'IA ?"] },
+  { step: "atelier", th: "Ligne éditoriale et production", q: [
+    "*Quels 3 ou 4 sujets le cabinet veut-il porter ? Lesquels ne seront jamais abordés ?",
+    "*Quel rythme est tenable sur une semaine type ? Qui prépare, qui valide ?",
+    "Quel ton : proche, institutionnel, pédagogique ? Vouvoiement ?",
+    "Quelles personnes acceptent d'apparaître dans les contenus ?",
+    "Qui valide en cas d'absence du validateur habituel ?",
+    "Quels canaux privilégier : Instagram, Facebook, Google, site ?",
+    "Quels événements de l'année placer au calendrier (Octobre rose, fermetures, nouvelles arrivées) ?"] },
+  { step: "demos", th: "Automatisation et outils", q: [
+    "*Quelle tâche de communication est la plus répétitive aujourd'hui ?",
+    "Quel outil montré vous a le plus intéressés, et pourquoi ?",
+    "Quel budget mensuel le cabinet est-il prêt à consacrer aux outils ?",
+    "Qui serait responsable de maintenir une automatisation ?",
+    "Quelles données ne doivent jamais circuler dans un outil externe ?"] },
+  { step: "plan", th: "Plan d'action et suivi", q: [
+    "*Quelles trois actions peuvent démarrer dès la semaine prochaine ?",
+    "*Qui est responsable de quoi, et pour quand ?",
+    "Quels indicateurs regardera-t-on à mi-novembre ?",
+    "Quelle date pour le rendez-vous de suivi ?",
+    "Quel accompagnement vous manque encore ?",
+    "Qu'est-ce qui pourrait bloquer le plan, et que fait-on alors ?",
+    "Qu'avez-vous appris aujourd'hui qui vous a surpris ?"] },
 ];
+/* Format interne : [id, texte, prioritaire]. */
+DATA.questions = DATA.questionsRaw.map((g, gi) => ({
+  step: g.step, th: g.th,
+  q: g.q.map((s, i) => ["q" + gi + "_" + i, s.replace(/^\*/, ""), s.charAt(0) === "*" ? 1 : 0]),
+}));
 
 /* ---------- Plan d'action : suggestions ---------- */
 DATA.planSuggest = [
-  { sem: "S1", quoi: "Récupérer tous les accès (site, Instagram, Facebook, Google, Canva), retirer ceux de l'agence, activer la double authentification", qui: "Manager" },
-  { sem: "S1", quoi: "Valider la charte « on publie / on ne publie pas » (issue de l'atelier déontologique)", qui: "Dr Becker" },
-  { sem: "S1", quoi: "Ajouter la page « Honoraires et paiements » au site et l'affichage en salle d'attente", qui: "Dr Becker" },
-  { sem: "S2", quoi: "Remplir le calendrier éditorial des 4 prochaines semaines (2 publications par semaine)", qui: "Réf. communication" },
-  { sem: "S2", quoi: "Relire les formulations du site et des réseaux (superlatifs, « le jour même », hygiène) et corriger", qui: "Dr Dauphin" },
-  { sem: "S3", quoi: "Faire signer l'accord de droit à l'image à l'équipe et classer la banque de photos", qui: "Manager" },
-  { sem: "S3", quoi: "Publier et programmer deux posts avec le bloc de contexte et la grille de relecture", qui: "Réf. communication" },
-  { sem: "S4", quoi: "Mesurer le temps passé, les publications tenues, ce qui bloque ; préparer le rendez-vous de suivi", qui: "Réf. communication" },
-  { sem: "S4", quoi: "Demander au conseil départemental de l'Ordre la position sur les avis et le référencement", qui: "Dr Becker" },
-  { sem: "S2", quoi: "Transformer deux FAQ Instagram en articles de blog validés par un dentiste", qui: "Dr Dauphin" },
+  { sem: "S1", quoi: "Récupérer tous les accès (site, Instagram, Facebook, Google, Canva), retirer ceux de l'agence, activer la double authentification", qui: "" },
+  { sem: "S1", quoi: "Valider la charte « on publie / on ne publie pas » (issue de l'atelier déontologique)", qui: "" },
+  { sem: "S1", quoi: "Ajouter la page « Honoraires et paiements » au site et l'affichage en salle d'attente", qui: "" },
+  { sem: "S2", quoi: "Remplir le calendrier éditorial des 4 prochaines semaines (2 publications par semaine)", qui: "" },
+  { sem: "S2", quoi: "Relire les formulations du site et des réseaux (superlatifs, « le jour même », hygiène) et corriger", qui: "" },
+  { sem: "S3", quoi: "Faire signer l'accord de droit à l'image à l'équipe et classer la banque de photos", qui: "" },
+  { sem: "S3", quoi: "Publier et programmer deux posts avec le bloc de contexte et la grille de relecture", qui: "" },
+  { sem: "S4", quoi: "Mesurer le temps passé, les publications tenues, ce qui bloque ; préparer le rendez-vous de suivi", qui: "" },
+  { sem: "S4", quoi: "Demander au conseil départemental de l'Ordre la position sur les avis et le référencement", qui: "" },
+  { sem: "S2", quoi: "Transformer deux FAQ Instagram en articles de blog validés par un dentiste", qui: "" },
 ];
 
 DATA.indicateurs = [

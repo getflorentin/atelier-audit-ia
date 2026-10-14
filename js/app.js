@@ -1,6 +1,6 @@
 /* Noyau : état, sauvegarde, routage, liaison des champs, utilitaires. */
 (function () {
-  const KEY = "atelier-audit-ia-v1";
+  const KEY = "atelier-audit-ia-v2";
   const PAGES = {};
   const ACTIONS = {};
 
@@ -77,12 +77,37 @@
     })();
   }
 
+
+  /* ---------- Questions à poser, par étape ---------- */
+  function qGroup(g, opts) {
+    const only = opts && opts.onlyPrio;
+    const qs = g.q.filter((q) => !only || q[2]);
+    if (!qs.length) return "";
+    return `<div class="qgroup"><h3>${esc(g.th)}</h3>${qs.map((q) => `<div class="qitem">
+      <label class="qrow"><input type="checkbox" data-b="qdone.${q[0]}"><span class="qtext">${q[2] ? '<span class="star" title="Prioritaire">★</span> ' : ""}${esc(q[1])}</span></label>
+      <textarea data-b="qa.${q[0]}" placeholder="Réponse du cabinet" rows="2"></textarea></div>`).join("")}</div>`;
+  }
+  function qCount(step) {
+    const gs = DATA.questions.filter((g) => !step || g.step === step); let n = 0, d = 0;
+    gs.forEach((g) => g.q.forEach((q) => { n++; if (APP.S.qdone[q[0]]) d++; }));
+    return [d, n];
+  }
+  function qPanel(step) {
+    const gs = DATA.questions.filter((g) => g.step === step); if (!gs.length) return "";
+    const [d, n] = qCount(step);
+    return `<details class="card qpanel noprint" open><summary><span class="qtitle">Questions à poser à cette étape</span><span class="chip acc qcount" data-step="${step}">${d} / ${n}</span></summary>${gs.map((g) => qGroup(g)).join("")}</details>`;
+  }
+  function updQ() {
+    $$(".qcount").forEach((el) => { const [d, n] = qCount(el.dataset.step || ""); el.textContent = d + " / " + n; });
+  }
+
   /* ---------- Liaison des champs ---------- */
   function bindAll(root) {
     $$("[data-b]", root).forEach((el) => {
       const path = el.dataset.b; const v = getp(path);
       if (el.type === "checkbox") el.checked = !!v;
       else if (el.type === "radio") el.checked = String(v) === el.value;
+      else if (el.type === "range" && v == null) el.value = el.min || 0;
       else el.value = v == null ? "" : v;
     });
   }
@@ -95,6 +120,7 @@
     setp(el.dataset.b, v); save();
     const p = PAGES[APP.current];
     if (p && p.onBind) p.onBind(el.dataset.b, el, $("#view"));
+    if (el.dataset.b.startsWith("qdone.")) updQ();
   }
   document.addEventListener("input", onInput);
   document.addEventListener("change", (e) => { if (e.target.matches("select[data-b], input[type=checkbox][data-b], input[type=radio][data-b]")) onInput(e); });
@@ -132,7 +158,7 @@
   };
 
   /* ---------- Rendu ---------- */
-  const APP = { S, PAGES, ACTIONS, esc, $, $$, save, getp, setp, toast, confetti, bindAll, current: "home", render: null, markDemo: null, merge, defaults };
+  const APP = { qGroup, qCount, qPanel, updQ, S, PAGES, ACTIONS, esc, $, $$, save, getp, setp, toast, confetti, bindAll, current: "home", render: null, markDemo: null, merge, defaults };
 
   function stepMeta(id) { return DATA.steps.find((s) => s.id === id); }
 
@@ -171,7 +197,9 @@
     const tips = DATA.tips[id];
     if (tips) html += `<details class="tips noprint"><summary>Conseils d'animation (visibles de vous seul)</summary><ul>${tips.map((t) => "<li>" + esc(t) + "</li>").join("")}</ul></details>`;
     if (tabs) html += `<div class="tabs noprint">${tabs.map((t) => `<button class="${t[0] === tab ? "active" : ""}" data-act="tab" data-tab="${t[0]}">${esc(t[1])}</button>`).join("")}</div>`;
-    html += page.render(tab);
+    const eyebrow = meta && meta.n ? `<div class="eyebrow"><span class="enum">${meta.n}</span><span>${esc(meta.t)}</span>${meta.time ? `<span class="etime">${esc(meta.time.replace(":", "h"))}</span>` : ""}</div>` : "";
+    html += eyebrow + page.render(tab);
+    if (id !== "questions") html += qPanel(id);
     const v = $("#view"); v.innerHTML = html;
     bindAll(v);
     if (page.init) page.init(v, tab);

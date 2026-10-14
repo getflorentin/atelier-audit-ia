@@ -70,20 +70,22 @@
 
   /* ===================== QUESTIONS ===================== */
   let onlyPrio = false;
+  const STEP_T = { cadrage: "Cadrage", audit: "Audit en direct", deonto: "Filtre déontologique", ia: "Observer l'IA", atelier: "Atelier contenu", demos: "Démos et outils", plan: "Plan d'action" };
   PAGES.questions = {
     render() {
-      const all = DATA.questions.reduce((n, g) => n + g.q.length, 0); const done = Object.keys(S().qdone).filter((k) => S().qdone[k]).length;
-      return `<h1>Questions à poser</h1><div class="row sb"><p class="muted">Cochez une question quand elle a été posée, notez la réponse.</p>
-        <label class="row"><input type="checkbox" id="onlyprio" ${onlyPrio ? "checked" : ""}> Prioritaires seulement</label></div>
-        <div class="meter" style="margin-bottom:16px"><i style="width:${(done / all) * 100}%"></i></div>
-        ${DATA.questions.map((g) => `<div class="card"><h3>${esc(g.th)}</h3>${g.q.filter((q) => !onlyPrio || q[2]).map((q) => `<div class="crit">
-          <label class="row" style="align-items:start"><input type="checkbox" data-b="qdone.${q[0]}" style="margin-top:5px"> <span class="t">${q[2] ? '<span class="hl">★</span> ' : ""}${esc(q[1])}</span></label>
-          <textarea data-b="qa.${q[0]}" placeholder="Réponse du cabinet" style="min-height:48px;margin-top:6px"></textarea></div>`).join("")}</div>`).join("<div style='height:14px'></div>")}`;
+      const [d, n] = APP.qCount("");
+      const steps = Object.keys(STEP_T);
+      return `<h1>Toutes les questions à poser</h1>
+        <div class="row sb"><p class="muted" style="margin:0">Rangées dans l'ordre de l'après-midi. Elles apparaissent aussi au bas de chaque étape. Cochez, puis notez la réponse.</p>
+        <label class="switch"><input type="checkbox" id="onlyprio" ${onlyPrio ? "checked" : ""}><span>Prioritaires seulement (★)</span></label></div>
+        <div class="row sb" style="margin:14px 0 6px"><b>Progression</b><span class="chip acc qcount" data-step="">${d} / ${n}</span></div>
+        <div class="meter" style="margin-bottom:18px"><i id="qbar" style="width:${(d / n) * 100}%"></i></div>
+        ${steps.map((st) => { const gs = DATA.questions.filter((g) => g.step === st); const html = gs.map((g) => APP.qGroup(g, { onlyPrio })).join(""); return html ? `<section class="card qstep"><div class="qstep-h"><span class="enum">${DATA.steps.find((s) => s.id === st).n}</span><h2>${esc(STEP_T[st])}</h2><span class="chip">${DATA.steps.find((s) => s.id === st).time.replace(":", "h")}</span></div>${html}</section>` : ""; }).join("")}`;
     },
     init(root) {
       const cb = $("#onlyprio", root); cb.addEventListener("change", () => { onlyPrio = cb.checked; APP.render(true); });
     },
-    onBind(p) { if (p.startsWith("qdone.")) { const all = DATA.questions.reduce((n, g) => n + g.q.length, 0); const done = Object.keys(S().qdone).filter((k) => S().qdone[k]).length; const m = $(".meter i"); if (m) m.style.width = (done / all) * 100 + "%"; } },
+    onBind(p) { if (p.startsWith("qdone.")) { const [d, n] = APP.qCount(""); const m = $("#qbar"); if (m) m.style.width = (d / n) * 100 + "%"; } },
   };
 
   /* ===================== PLAN D'ACTION ===================== */

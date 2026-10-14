@@ -196,7 +196,7 @@
     render(tab) {
       const A = S().atelier;
       if (tab === "piliers") return `<h1>Ligne éditoriale : piliers et rythme</h1>
-        <p class="muted">Quatre piliers maximum et un rythme que Charlotte peut vraiment tenir.</p>
+        <p class="muted">Quatre piliers maximum et un rythme que la référente communication peut vraiment tenir.</p>
         <div class="grid g2">${DATA.rubriques.map((r) => `<div class="card"><label class="row"><input type="checkbox" data-b="atelier.piliers.${r.id}"> <h3 style="margin:0">${esc(r.t)}</h3></label>
           <ul class="small muted">${r.ex.slice(0, 4).map((e) => `<li>${esc(e)}</li>`).join("")}</ul></div>`).join("")}</div>
         <div class="grid g2" style="margin-top:16px">
