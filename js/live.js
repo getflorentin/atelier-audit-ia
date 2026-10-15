@@ -1,6 +1,6 @@
-/* Téléphones des participants : quand l'atelier est ouvert via https://formation-ventoux.ceepia.tech/audit/
-   (le serveur de la formation relaie ce dépôt GitHub Pages, ce qui donne accès aux réponses),
-   chaque étape affiche un encart pour envoyer les téléphones sur la bonne question et voir les réponses en direct.
+/* Téléphones des participants : depuis github.io (mot de passe formateur saisi une fois) ou via
+   https://formation-ventoux.ceepia.tech/audit/ (session formateur), chaque étape affiche un encart pour
+   envoyer les téléphones sur la bonne question et voir les réponses en direct.
    Les participants répondent dans la session 3 de l'app de formation ; ici, on ne fait que lire et piloter. */
 (function () {
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -30,15 +30,24 @@
 
   let answers = [], online = null, open = {}, current = null;
 
+  // Ouvert via formation-ventoux.ceepia.tech/audit/ : la session formateur (cookie) suffit.
+  // Ouvert depuis github.io : on appelle le serveur de la formation avec le mot de passe formateur, saisi une fois.
+  const SAME = location.hostname === "formation-ventoux.ceepia.tech";
+  const API = SAME ? "" : "https://formation-ventoux.ceepia.tech";
+  const KEY = "ventoux-formateur";
+  const pw = () => { try { return localStorage.getItem(KEY) || ""; } catch (e) { return ""; } };
+  const call = (path, opts = {}) => fetch(API + path, { ...opts, credentials: SAME ? "same-origin" : "omit", headers: { ...(opts.headers || {}), ...(SAME ? {} : { "x-password": pw() }) } });
+
   async function load() {
+    if (!SAME && !pw()) { online = false; return draw(); }
     try {
-      const r = await fetch("/api/answers", { credentials: "same-origin" });
+      const r = await call("/api/answers");
       online = r.ok; if (r.ok) answers = await r.json();
     } catch (e) { online = false; }
     draw();
   }
   async function push(id) {
-    const r = await fetch("/api/state", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "same-origin", body: JSON.stringify({ s: 2, id }) }).catch(() => null);
+    const r = await call("/api/state", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ s: 2, id }) }).catch(() => null);
     current = r && r.ok ? id : null; APP.toast && APP.toast(r && r.ok ? "Téléphones envoyés sur cette question" : "Connectez-vous d'abord en formateur"); draw();
   }
 
@@ -70,7 +79,13 @@
     const list = STEPS[APP.current]; let el = document.getElementById("live");
     if (!list) { if (el) el.remove(); return; }
     if (!el) { el = document.createElement("section"); el.id = "live"; el.className = "card live"; const eb = v.querySelector(".eyebrow"); v.insertBefore(el, eb ? eb.nextSibling : v.firstChild); }
-    if (online === false) { el.innerHTML = `<b>📱 Téléphones des participants</b><p class="muted small">Pour piloter les téléphones : ouvrez l'atelier depuis <a href="https://formation-ventoux.ceepia.tech/audit/">formation-ventoux.ceepia.tech/audit/</a>, après vous être connecté en formateur sur <a href="https://formation-ventoux.ceepia.tech/" target="_blank">l'app de formation</a>.</p>`; return; }
+    if (online === false) {
+      el.innerHTML = SAME ? `<b>📱 Téléphones des participants</b><p class="muted small">Connectez-vous d'abord en formateur sur <a href="/" target="_blank">l'app de formation</a>, puis rechargez cette page.</p>`
+        : `<b>📱 Téléphones des participants</b><p class="muted small">Mot de passe formateur de formation-ventoux (saisi une seule fois sur cet ordinateur) :</p>
+          <div class="row"><input id="lv-pw" type="password" style="flex:1;padding:8px 12px;border-radius:10px;border:1px solid var(--line)"><button class="btn sm primary" data-live-login>Connecter</button></div>
+          ${pw() ? '<p class="small" style="color:var(--bad)">Mot de passe refusé ou serveur injoignable.</p>' : ""}`;
+      return;
+    }
     el.innerHTML = `<div class="row sb"><b>📱 Téléphones des participants</b><span class="muted small">Réponses en direct · formation-ventoux</span></div>` +
       list.map(([id, label, spec]) => `<div class="lv-block ${current === id ? "on" : ""}"><div class="row sb"><span class="lv-t">${esc(label)}</span><span class="row">
         <button class="btn sm ${current === id ? "primary" : ""}" data-live-push="${id}">${current === id ? "✓ Sur les téléphones" : "Envoyer aux téléphones"}</button>
@@ -81,6 +96,7 @@
   document.addEventListener("click", (e) => {
     const p = e.target.closest("[data-live-push]"); if (p) { push(p.dataset.livePush); return; }
     const o = e.target.closest("[data-live-open]"); if (o) { open[o.dataset.liveOpen] = !open[o.dataset.liveOpen]; draw(); }
+    if (e.target.closest("[data-live-login]")) { try { localStorage.setItem(KEY, document.getElementById("lv-pw").value); } catch (err) {} online = null; load(); }
   });
   // L'atelier réécrit #view à chaque action : on remet l'encart à sa place.
   new MutationObserver(() => { if (!document.getElementById("live")) draw(); }).observe(document.getElementById("view"), { childList: true });
