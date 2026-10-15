@@ -14,3 +14,14 @@ Les repères déontologiques s'appuient sur le décret n° 2020-1658 et les reco
 Ouvrir l'atelier via **https://formation-ventoux.ceepia.tech/audit/** (le serveur de la formation relaie ce dépôt GitHub Pages) après s'être connecté en formateur sur https://formation-ventoux.ceepia.tech/.
 Chaque étape affiche alors un encart « 📱 Téléphones des participants » (`js/live.js`) : envoyer les téléphones sur une question, voir les réponses en direct.
 Les participants répondent dans la session 3 de l'app de formation. Les questions et cas affichés sur les téléphones viennent d'une copie de `js/data.js` : prévenir Nathanaël en cas de modification de `data.js` pour la resynchroniser.
+
+### Travailler sans casser la séance
+
+`formation-ventoux.ceepia.tech/audit/` sert le repère **`stable`**, pas `main`. On peut donc pousser sur `main` à tout moment : seul github.io change.
+Pour mettre en ligne la version de `main` pendant la séance, une fois testée :
+
+```
+git tag -f stable && git push -f origin stable
+```
+
+(Prise en compte en quelques minutes, le temps du cache GitHub.) Pour revenir en arrière : `git tag -f stable <commit-précédent> && git push -f origin stable`.
