@@ -1,6 +1,6 @@
 /* Noyau : état, sauvegarde, routage, liaison des champs, utilitaires. */
 (function () {
-  const KEY = "atelier-audit-ia-v2";
+  const KEY = "atelier-audit-ia-v3";
   const PAGES = {};
   const ACTIONS = {};
 
@@ -9,6 +9,9 @@
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
 
   function defaults() {
+    return merge(baseDefaults(), window.SEED || {});
+  }
+  function baseDefaults() {
     return {
       names: DATA.participants.slice(),
       attentes: {}, objectifs: {}, postits: [],
