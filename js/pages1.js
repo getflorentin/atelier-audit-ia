@@ -11,7 +11,6 @@
       const sched = DATA.schedule.map((s) => `<tr><td><b>${fmtT(s[0])}</b> – ${fmtT(s[1])}</td><td>${esc(s[3])}</td><td>${s[2] === "pause" ? "" : `<button class="btn sm" data-act="go" data-to="${s[2]}">Ouvrir</button>`}</td></tr>`).join("");
       return `
       <section class="hero">
-        <svg width="360" height="260" viewBox="0 0 360 260" fill="none" stroke="#c8401f" stroke-width="1.5"><path d="M10 40H150V120H240V60H350"/><path d="M40 220V160H180V230H300"/><circle cx="150" cy="40" r="4" fill="#c8401f"/><circle cx="240" cy="120" r="4" fill="#c8401f"/><circle cx="180" cy="160" r="4" fill="#d6246e" stroke="#d6246e"/></svg>
         <span class="chip pink">SCM Ventoux · Monteux · 15 octobre 2026</span>
         <h1 style="margin-top:14px">Votre communication, <span class="hl">enfin simple</span> à tenir avec l'IA.</h1>
         <p style="max-width:640px;font-size:1.1rem" class="muted">Cet après-midi, on regarde ensemble ce qui existe, on pose les règles, on teste, puis on repart avec un plan d'action et un rapport complet généré en direct.</p>

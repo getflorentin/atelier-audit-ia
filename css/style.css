@@ -423,3 +423,14 @@ table.t tbody tr:hover { background: #fdfaf5; }
   .tabs { border-radius: 20px; }
 }
 .grid > .card + .card, .split > .card + .card, .split > div > .card + .card.noreset, .studio > .card + .card, .g5 > .card + .card { margin-top: 0; }
+
+/* Encart « téléphones des participants » (js/live.js) */
+.live { margin: 0 0 18px; border: 1px solid var(--accent-soft); }
+.lv-block { padding: 10px 0; border-top: 1px solid var(--line); } .lv-block:first-of-type { border-top: 0; }
+.lv-block.on .lv-t { color: var(--accent); font-weight: 700; }
+.lv-t { font-weight: 600; }
+.lv-res { margin-top: 10px; display: grid; gap: 6px; }
+.lv-row { display: grid; grid-template-columns: minmax(160px, 1.2fr) 2fr 40px; gap: 10px; align-items: center; font-size: .9rem; }
+.lv-bar { height: 10px; border-radius: 999px; background: var(--bg2); overflow: hidden; } .lv-bar i { display: block; height: 100%; background: var(--accent); }
+.lv-item { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; font-size: .88rem; padding: 6px 0; border-top: 1px dashed var(--line); }
+.lv-q { display: grid; gap: 4px; padding: 6px 0; } .lv-q p { font-size: .9rem; }
